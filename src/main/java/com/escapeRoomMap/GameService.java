@@ -44,7 +44,7 @@ public class GameService {
 
     List<ConnectionView> getConnections(int gameId) {
         System.out.println(roomRepository.getConnectionsView(gameId));
-        roomRepository.getConnectionsView(gameId).stream().forEach(con -> System.out.println(con.getId() + " " + con.getNextRoomId()));
+        roomRepository.getConnectionsView(gameId).stream().forEach(con -> System.out.println(con.getFrom() + " " + con.getTo()));
        return roomRepository.getConnectionsView(gameId);
     }
 

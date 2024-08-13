@@ -4,9 +4,10 @@ import org.springframework.beans.factory.annotation.Value;
 
 public interface ConnectionView {
 
-    int getId();
+    @Value("#{target.id}")
+    int getFrom();
 
-    @Value("#{target.nextRoom != null ? target.nextRoom.id : -1}")
-    int getNextRoomId();
+    @Value("#{target.nextRoom.id}")
+    int getTo();
 
 }
