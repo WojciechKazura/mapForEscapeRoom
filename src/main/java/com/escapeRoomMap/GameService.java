@@ -2,6 +2,7 @@ package com.escapeRoomMap;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 import java.util.List;
@@ -13,7 +14,6 @@ public class GameService {
     private GameRepository gameRepository;
 
 
-
     public GameService(RoomRepository roomRepository, GameRepository gameRepository) {
         this.roomRepository = roomRepository;
         this.gameRepository = gameRepository;
@@ -22,7 +22,7 @@ public class GameService {
     }
 
     @PostConstruct
-    void vieRoomId(){
+    void vieRoomId() {
         System.out.println(roomRepository.getRoomIdsByGame(1));
     }
 
@@ -51,7 +51,26 @@ public class GameService {
     List<ConnectionView> getConnections(int gameId) {
         System.out.println(roomRepository.getConnectionsView(gameId));
         roomRepository.getConnectionsView(gameId).stream().forEach(con -> System.out.println(con.getFrom() + " " + con.getTo()));
-       return roomRepository.getConnectionsView(gameId);
+        return roomRepository.getConnectionsView(gameId);
+    }
+
+    void move(int nextRoomId, int gameId) {
+        Game game = gameRepository.findById(gameId).orElseThrow();
+        List<ConnectionView> connections = getConnections(gameId);
+        boolean isConnection = false;
+        for (ConnectionView connection : connections) {
+            if (connection.getTo() == nextRoomId && connection.getFrom() == game.getActiveRoom().getId()) {
+                isConnection = true;
+            }
+        }
+        if(isConnection){
+            game.setActiveRoom(roomRepository.findById(nextRoomId).orElseThrow());
+            gameRepository.save(game);
+        }else{
+            throw new IllegalStateException("Nie udało się wykonać takiego ruchu");
+        }
+
+
     }
 
 

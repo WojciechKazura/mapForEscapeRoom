@@ -21,12 +21,17 @@ public class GameController {
     }
 
     @GetMapping("/games/{id}/connections")
-    List<ConnectionView> getConnections(@PathVariable int id){
+    List<ConnectionView> getConnections(@PathVariable int id) {
         return gameService.getConnections(id);
     }
 
+    @PostMapping("/games/{id}/moves")
+    void addMove(int nextRoomId, @PathVariable int id) {
+       gameService.move(nextRoomId, id);
+    }
 
-   //wyslanie przez ciało:   w zapytaniu ma być json w ciele np: { "id":1 }
+
+    //wyslanie przez ciało:   w zapytaniu ma być json w ciele np: { "id":1 }
    /* @GetMapping("/games")
     GameDTO getGameByBody(@RequestBody GameDTO gameDTO) {
         System.out.println("Szukam po id: " + gameDTO.getId());

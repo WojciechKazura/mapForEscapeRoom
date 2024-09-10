@@ -54,6 +54,9 @@ public class Game {
         return activeRoom;
     }
 
+    public void setActiveRoom(Room activeRoom) {
+        this.activeRoom = activeRoom;
+    }
 
     @Override
     public String toString() {
