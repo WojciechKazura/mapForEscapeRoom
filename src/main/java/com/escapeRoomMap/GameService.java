@@ -31,14 +31,20 @@ public class GameService {
         gameRepository.save(game);
         gameDTO.setFirstRoom(game.getFirtRoom().covertRoomToRoomDTO());
         gameDTO.setId(game.getId());
+        gameDTO.setConnections(getConnections(game.getId()));
         System.out.println(gameDTO);
+        gameDTO.setActiveRoom(game.getActiveRoom().getId());
         return gameDTO;
     }
 
     GameDTO getGame(int id) {
         Game game = gameRepository.getReferenceById(id);
         System.out.println(game.getFirtRoom().covertRoomToRoomDTO());
-        return new GameDTO(id, game.getName(), game.getHowManyRooms(), game.getFirtRoom().covertRoomToRoomDTO(), getConnections(game.getId()));
+        return new GameDTO(id, game.getName(),
+                game.getHowManyRooms(),
+                game.getFirtRoom().covertRoomToRoomDTO(),
+                getConnections(game.getId()),
+                game.getActiveRoom().getId());
     }
 
 
