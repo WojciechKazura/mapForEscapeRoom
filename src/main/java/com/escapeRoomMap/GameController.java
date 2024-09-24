@@ -1,5 +1,7 @@
 package com.escapeRoomMap;
 
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +28,13 @@ public class GameController {
     }
 
     @PostMapping("/games/{id}/moves")
-    void addMove(int nextRoomId, @PathVariable int id) {
-       gameService.move(nextRoomId, id);
+    ResponseEntity<String> addMove(int nextRoomId, @PathVariable int id) {
+       try {
+           gameService.move(nextRoomId, id);
+           return ResponseEntity.ok("Poprawnie wykonany ruch");
+       } catch (IllegalStateException e){
+           return ResponseEntity.badRequest().body(e.getMessage());
+       }
     }
 
 
@@ -49,7 +56,6 @@ public class GameController {
 
     @GetMapping("/games/{id}")
     GameDTO getGame(@PathVariable int id) {
-        System.out.println("Szukam po id: " + id);
         return gameService.getGame(id);
     }
 
