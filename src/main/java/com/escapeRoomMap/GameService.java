@@ -1,9 +1,6 @@
 package com.escapeRoomMap;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
 
 import java.util.List;
 
@@ -42,16 +39,14 @@ public class GameService {
 
 
     List<ConnectionView> getConnections(int gameId) {
-        roomRepository.getConnectionsView(gameId).stream().forEach(con -> System.out.println(con.getFrom() + " " + con.getTo()));
         return roomRepository.getConnectionsView(gameId);
     }
-
     void move(int nextRoomId, int gameId) {
         Game game = gameRepository.findById(gameId).orElseThrow();
         List<ConnectionView> connections = getConnections(gameId);
         boolean isConnection = false;
         for (ConnectionView connection : connections) {
-            if (connection.getTo() == nextRoomId && connection.getFrom() == game.getActiveRoom().getId()) {
+            if (connection.getConnections().containsAll(List.of(nextRoomId,game.getActiveRoom().getId()))){
                 isConnection = true;
             }
         }

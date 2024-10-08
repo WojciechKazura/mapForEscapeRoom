@@ -1,6 +1,5 @@
 package com.escapeRoomMap;
 
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +18,9 @@ public class GameController {
 
     @PostMapping("/games")
     GameDTO createGame(@RequestBody GameDTO gameDTO) {
-        return gameService.saveGame(gameDTO);
+
+        GameDTO gameDTO1 = gameService.saveGame(gameDTO);
+        return gameDTO1;
     }
 
     @GetMapping("/games/{id}/connections")
