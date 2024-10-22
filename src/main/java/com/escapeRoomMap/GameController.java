@@ -18,7 +18,6 @@ public class GameController {
 
     @PostMapping("/games")
     GameDTO createGame(@RequestBody GameDTO gameDTO) {
-
         GameDTO gameDTO1 = gameService.saveGame(gameDTO);
         return gameDTO1;
     }

@@ -2,24 +2,24 @@ package com.escapeRoomMap;
 
 public class ConnectionDTO {
 
-    private int from;
-    private int to;
+    private int source;
+    private int target;
 
-    public ConnectionDTO(int from, int to) {
-        this.from = from;
-        this.to = to;
+    public ConnectionDTO(int source, int target) {
+        this.source = source;
+        this.target = target;
     }
 
     public ConnectionDTO() {
 
     }
 
-    public int getFrom() {
-        return from;
+    public int getSource() {
+        return source;
     }
 
-    public int getTo() {
-        return to;
+    public int getTarget() {
+        return target;
     }
 
 

@@ -2,6 +2,9 @@ package com.escapeRoomMap;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Room {
 
@@ -28,6 +31,21 @@ public class Room {
         this.game = game;
     }
 
+    public List<RoomDTO> getConnectedRoomsId(){
+        List<Integer>connectedRoomsId= new ArrayList<>();
+        Room room = this;
+        connectedRoomsId.add(room.getId());
+        while (room.nextRoom!=null){
+            connectedRoomsId.add(room.nextRoom.getId());
+            room=room.nextRoom;
+        }
+        return connectedRoomsId.stream()
+                .distinct()
+                .map(RoomDTO::new)
+                .toList();
+
+    }
+
     public int getId() {
         return id;
     }
@@ -41,11 +59,7 @@ public class Room {
     }
 
     RoomDTO covertRoomToRoomDTO() {
-        RoomDTO nextRoomDTO=null;
-        if (nextRoom != null) {
-            nextRoomDTO = nextRoom.covertRoomToRoomDTO();
-        }
-        return new RoomDTO(id, nextRoomDTO);
+        return new RoomDTO(id);
     }
 
 }
