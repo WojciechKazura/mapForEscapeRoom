@@ -2,6 +2,10 @@ package com.escapeRoomMap;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 
 @Entity
 public class Game {
@@ -19,19 +23,49 @@ public class Game {
     public Game() {
     }
 
+
+
+
     public Game(String name, int howManyRooms) {
         this.name = name;
         this.howManyRooms = howManyRooms;
-        Room firstRoom = new Room(this);
-        this.firtRoom = firstRoom;
-        this.activeRoom = firstRoom;
-        Room beforeRoom = firstRoom;
-        for (int i = 0; i < howManyRooms-1; i++) {
-            Room room = new Room(this);
-            beforeRoom.setNextRoom(room);
-            beforeRoom=room;
+        ////
+        firtRoom = new Room(this);
+        createRooms(firtRoom);
+        System.out.println(firtRoom);
+        this.activeRoom = firtRoom;
+//        Room beforeRoom = firstRoom;
+//        for (int i = 0; i < howManyRooms - 1; i++) {
+//            Room room = new Room(this);
+//            beforeRoom.setNextRoom(room);
+//            beforeRoom = room;
+//        }
+    }
+
+    public void createRooms(Room room){
+        List<Room> roomList= createConnections();
+        room.setConnectionsRoom(roomList);
+        for(Room next : roomList){
+           createRooms(next);
         }
     }
+
+    public List<Room> createConnections() {
+        Random random = new Random();
+        double howManyConnections = random.nextDouble();
+        List<Room> roomList = new ArrayList<>();
+        if (howManyConnections < 0.3) {
+            for (int i = 0; i < 2; i++) {
+                Room nextRoom = new Room(this);
+                roomList.add(nextRoom);
+            }
+        } else if (howManyConnections < 0.8) {
+            Room nextRoom = new Room(this);
+            roomList.add(nextRoom);
+        }
+        return roomList;
+    }
+
 
 
     public int getId() {

@@ -37,7 +37,8 @@ public class GameService {
 
 
     List<ConnectionView> getConnections(int gameId) {
-        return roomRepository.getConnectionsView(gameId);
+      //  return roomRepository.getConnectionsView(gameId);
+        return null; //todo
     }
 
     void move(int nextRoomId, int gameId) {

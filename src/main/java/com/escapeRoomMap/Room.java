@@ -15,24 +15,21 @@ public class Room {
     @ManyToOne
     private Game game;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Room nextRoom;
+    @Transient
+    private  List<Room> connectionsRoom;
 
     public Room() {
 
     }
 
-    public Room(Game game) {
-        this.game =game;
-    }
 
-    public Room(Room nextRoom,Game game) {
-        this.nextRoom = nextRoom;
+
+    public Room(Game game) {
         this.game = game;
     }
 
     public List<RoomDTO> getConnectedRoomsId(){
-        List<Integer>connectedRoomsId= new ArrayList<>();
+       /* List<Integer>connectedRoomsId= new ArrayList<>();
         Room room = this;
         connectedRoomsId.add(room.getId());
         while (room.nextRoom!=null){
@@ -42,7 +39,10 @@ public class Room {
         return connectedRoomsId.stream()
                 .distinct()
                 .map(RoomDTO::new)
-                .toList();
+                .toList();*/
+
+
+        return new ArrayList<>();
 
     }
 
@@ -50,16 +50,24 @@ public class Room {
         return id;
     }
 
-    public Room getNextRoom() {
-        return nextRoom;
+    public List<Room> getConnectionsRoom() {
+        return connectionsRoom;
     }
 
-    public void setNextRoom(Room nextRoom) {
-        this.nextRoom = nextRoom;
+    public void setConnectionsRoom(List<Room> connectionsRoom) {
+        this.connectionsRoom = connectionsRoom;
     }
 
     RoomDTO covertRoomToRoomDTO() {
         return new RoomDTO(id);
     }
 
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", game=" + game +
+                ", connectionsRoom=" + connectionsRoom +
+                '}';
+    }
 }
