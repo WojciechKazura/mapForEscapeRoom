@@ -8,23 +8,23 @@ import java.util.List;
 @Entity
 public class Room {
 
+    public static int nextId = 1;
+    private int debugId;
+
     @Id
     @GeneratedValue
     private int id;
-
     @ManyToOne
     private Game game;
 
-    @Transient
-    private  List<Room> connectionsRoom;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private  List<Room> nextRooms;
 
     public Room() {
-
     }
 
-
-
     public Room(Game game) {
+        debugId = nextId++;
         this.game = game;
     }
 
@@ -50,12 +50,12 @@ public class Room {
         return id;
     }
 
-    public List<Room> getConnectionsRoom() {
-        return connectionsRoom;
+    public List<Room> getNextRooms() {
+        return nextRooms;
     }
 
-    public void setConnectionsRoom(List<Room> connectionsRoom) {
-        this.connectionsRoom = connectionsRoom;
+    public void setNextRooms(List<Room> nextRooms) {
+        this.nextRooms = nextRooms;
     }
 
     RoomDTO covertRoomToRoomDTO() {
@@ -64,10 +64,14 @@ public class Room {
 
     @Override
     public String toString() {
+        String nextIds = "Next rooms: ";
+        for (Room nextRoom : nextRooms) {
+            nextIds +=nextRoom.debugId + ", ";
+        }
         return "Room{" +
                 "id=" + id +
-                ", game=" + game +
-                ", connectionsRoom=" + connectionsRoom +
+                "debug=" + debugId +
+                nextIds +
                 '}';
     }
 }
