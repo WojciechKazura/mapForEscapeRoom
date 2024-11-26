@@ -57,8 +57,8 @@ public class Room {
                 '}';
     }
 
-   List<ConnectionView> getConnectionsDts(){
-        List<ConnectionView> connectionViews=new ArrayList<>();
+   List<ConnectionDTO> getConnectionsDts(){
+        List<ConnectionDTO> connectionViews=new ArrayList<>();
         for(Room room : nextRooms ){
             ConnectionDTO connectionDTO = new ConnectionDTO(id, room.id);
             connectionViews.add(connectionDTO);

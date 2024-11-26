@@ -38,9 +38,9 @@ public class GameService {
     }
 
 
-    List<ConnectionView> getConnections(int gameId) {
+    List<ConnectionDTO> getConnections(int gameId) {
         List<Room> rooms = roomRepository.getRooms(gameId);
-        List<ConnectionView> connectionViews = new ArrayList<>();
+        List<ConnectionDTO> connectionViews = new ArrayList<>();
        for(Room room: rooms){
            connectionViews.addAll(room.getConnectionsDts());
        }
@@ -49,9 +49,9 @@ public class GameService {
 
     void move(int nextRoomId, int gameId) {
         Game game = gameRepository.findById(gameId).orElseThrow();
-        List<ConnectionView> connections = getConnections(gameId);
+        List<ConnectionDTO> connections = getConnections(gameId);
         boolean isConnection = false;
-        for (ConnectionView connection : connections) {
+        for (ConnectionDTO connection : connections) {
             if (connection.getConnections().containsAll(List.of(nextRoomId, game.getActiveRoom().getId()))) {
                 isConnection = true;
             }

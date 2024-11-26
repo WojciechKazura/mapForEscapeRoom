@@ -9,14 +9,14 @@ public class GameDTO {
     private RoomDTO firstRoom;
     private int howManyRooms;
     private int activeRoom;
-    private List<ConnectionView> connections;
+    private List<ConnectionDTO> connections;
     private List<RoomDTO> rooms;
 
 
     public GameDTO() {
     }
 
-    public GameDTO(int id,String name, int howManyRooms, RoomDTO roomDTO, List<ConnectionView> connections, int activeRoom, List<RoomDTO>roomsList ) {
+    public GameDTO(int id,String name, int howManyRooms, RoomDTO roomDTO, List<ConnectionDTO> connections, int activeRoom, List<RoomDTO>roomsList ) {
         this.id = id;
         this.name=name;
         this.howManyRooms=howManyRooms;
@@ -46,7 +46,7 @@ public class GameDTO {
         return rooms;
     }
 
-    public List<ConnectionView> getConnections() {
+    public List<ConnectionDTO> getConnections() {
         return connections;
     }
 
@@ -63,7 +63,7 @@ public class GameDTO {
         this.firstRoom = firstRoom;
     }
 
-    public void setConnections(List<ConnectionView> connections) {
+    public void setConnections(List<ConnectionDTO> connections) {
         this.connections = connections;
     }
 

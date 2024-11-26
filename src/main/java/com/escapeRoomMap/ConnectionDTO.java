@@ -1,35 +1,34 @@
 package com.escapeRoomMap;
 
-public class ConnectionDTO implements ConnectionView {
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-    private int source;
-    private int target;
+import java.util.Collection;
+import java.util.List;
 
-    public ConnectionDTO(int source, int target) {
-        this.source = source;
-        this.target = target;
+public class ConnectionDTO {
+
+    private int from;
+    private int to;
+
+    public ConnectionDTO(int from, int to) {
+        this.from = from;
+        this.to = to;
     }
 
     public ConnectionDTO() {
 
     }
 
-    public int getSource() {
-        return source;
-    }
-
-    public int getTarget() {
-        return target;
-    }
-
-
-    @Override
     public int getFrom() {
-        return getSource();
+        return from;
     }
 
-    @Override
     public int getTo() {
-        return getTarget();
+        return to;
+    }
+
+    @JsonIgnore
+    public List<Integer> getConnections() {
+        return List.of(from,to);
     }
 }

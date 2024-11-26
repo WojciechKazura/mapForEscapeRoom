@@ -10,7 +10,6 @@ public class GameController {
 
     private GameService gameService;
 
-
     public GameController(GameService gameService) {
         this.gameService = gameService;
     }
@@ -22,7 +21,7 @@ public class GameController {
     }
 
     @GetMapping("/games/{id}/connections")
-    List<ConnectionView> getConnections(@PathVariable int id) {
+    List<ConnectionDTO> getConnections(@PathVariable int id) {
         return gameService.getConnections(id);
     }
 
