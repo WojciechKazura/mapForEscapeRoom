@@ -2,6 +2,7 @@ package com.escapeRoomMap;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,18 +28,23 @@ public class GameService {
     }
 
     GameDTO mapToDTO(Game game) {
+        List<Room> rooms = roomRepository.getRooms(game.getId());
         return new GameDTO(game.getId(), game.getName(),
                 game.getHowManyRooms(),
                 game.getFirtRoom().covertRoomToRoomDTO(),
                 getConnections(game.getId()),
                 game.getActiveRoom().getId(),
-                game.getFirtRoom().getConnectedRoomsId());
+                rooms.stream().map(room -> new RoomDTO(room.getId())).toList());
     }
 
 
     List<ConnectionView> getConnections(int gameId) {
-      //  return roomRepository.getConnectionsView(gameId);
-        return null; //todo
+        List<Room> rooms = roomRepository.getRooms(gameId);
+        List<ConnectionView> connectionViews = new ArrayList<>();
+       for(Room room: rooms){
+           connectionViews.addAll(room.getConnectionsDts());
+       }
+        return connectionViews;
     }
 
     void move(int nextRoomId, int gameId) {

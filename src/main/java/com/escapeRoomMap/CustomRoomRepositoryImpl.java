@@ -16,7 +16,7 @@ public class CustomRoomRepositoryImpl implements CustomRoomRepository{
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<ConnectionDTO> getConnections(int gameId){
+    public List<ConnectionView> getConnections(int gameId){
        return jdbcTemplate.query("select * from Room r where r.game.id = "+gameId, new MyRowMapper());
     }
 //todo
@@ -26,11 +26,11 @@ public class CustomRoomRepositoryImpl implements CustomRoomRepository{
     }
 
 
-    static class MyRowMapper implements RowMapper<ConnectionDTO>{
+    static class MyRowMapper implements RowMapper<ConnectionView>{
 
         @Override
-        public ConnectionDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new ConnectionDTO(rs.getInt("ID"),rs.getInt("NEXT_ROOM_ID"));
+        public ConnectionView mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new ConnectionDTO(rs.getInt("NEXT_ROOMS_ID"),rs.getInt("ROOM_ID"));
 
         }
     }

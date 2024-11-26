@@ -28,24 +28,6 @@ public class Room {
         this.game = game;
     }
 
-    public List<RoomDTO> getConnectedRoomsId(){
-       /* List<Integer>connectedRoomsId= new ArrayList<>();
-        Room room = this;
-        connectedRoomsId.add(room.getId());
-        while (room.nextRoom!=null){
-            connectedRoomsId.add(room.nextRoom.getId());
-            room=room.nextRoom;
-        }
-        return connectedRoomsId.stream()
-                .distinct()
-                .map(RoomDTO::new)
-                .toList();*/
-
-
-        return new ArrayList<>();
-
-    }
-
     public int getId() {
         return id;
     }
@@ -73,5 +55,14 @@ public class Room {
                 "debug=" + debugId +
                 nextIds +
                 '}';
+    }
+
+   List<ConnectionView> getConnectionsDts(){
+        List<ConnectionView> connectionViews=new ArrayList<>();
+        for(Room room : nextRooms ){
+            ConnectionDTO connectionDTO = new ConnectionDTO(id, room.id);
+            connectionViews.add(connectionDTO);
+        }
+        return connectionViews;
     }
 }

@@ -1,6 +1,6 @@
 package com.escapeRoomMap;
 
-public class ConnectionDTO {
+public class ConnectionDTO implements ConnectionView {
 
     private int source;
     private int target;
@@ -23,6 +23,13 @@ public class ConnectionDTO {
     }
 
 
+    @Override
+    public int getFrom() {
+        return getSource();
+    }
 
-
+    @Override
+    public int getTo() {
+        return getTarget();
+    }
 }
